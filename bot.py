@@ -38,7 +38,7 @@ bot = Client(
 api = FastAPI()
 api.add_middleware(
     CORSMiddleware,
-    allow_origins=["{MY_DOMAIN}"],
+    allow_origins=[f"{MY_DOMAIN}"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
