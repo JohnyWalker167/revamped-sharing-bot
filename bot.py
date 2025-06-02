@@ -509,6 +509,11 @@ async def delete_file_handler(client, message: Message):
                 
 # --- FastAPI Endpoints ---
 
+@api.get("/")
+async def root():
+    """Greet users on root route."""
+    return JSONResponse({"message": "👋 Hello! Welcome to the Sharing Bot"})
+
 @api.get("/api/channels")
 async def api_channels():
     """List all channels (JSON)."""
