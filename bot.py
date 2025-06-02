@@ -327,7 +327,7 @@ async def index_channel_files(client, message: Message):
             if not msg:
                 continue
             if msg.document or msg.video or msg.audio or msg.photo:
-                caption_name = message.caption.strip() if message.caption else None
+                caption_name = msg.caption.strip() if msg.caption else None
                 file_info = {
                     "channel_id": channel_id,
                     "message_id": msg.id,
