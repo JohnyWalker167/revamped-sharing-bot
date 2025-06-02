@@ -3,6 +3,7 @@ import asyncio
 import requests
 import base64
 import re
+import sys
 from datetime import datetime, timezone, timedelta
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
@@ -506,6 +507,11 @@ async def delete_file_handler(client, message: Message):
             await message.reply_text("❌ File not found in database.")
     except Exception as e:
         await message.reply_text(f"Error: {e}")
+
+@bot.on_message(filters.command('restart') & filters.private & filters.user(OWNER_ID))
+async def restart(client, message):
+    os.system("python3 update.py")  
+    os.execl(sys.executable, sys.executable, "bot.py")
                 
 # --- FastAPI Endpoints ---
 
