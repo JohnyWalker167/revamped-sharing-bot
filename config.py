@@ -1,6 +1,29 @@
 
 import os
+import logging
 from dotenv import load_dotenv
+from os import environ
+from requests import get as rget
+
+# Logger setup
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger("sharing_bot")
+
+CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
+try:
+    if len(CONFIG_FILE_URL) == 0:
+        raise TypeError
+    try:
+        res = rget(CONFIG_FILE_URL)
+        if res.status_code == 200:
+            with open('config.env', 'wb+') as f:
+                f.write(res.content)
+        else:
+            logger.error(f"Failed to download config.env {res.status_code}")
+    except Exception as e:
+        logger.info(f"CONFIG_FILE_URL: {e}")
+except:
+    pass
 
 load_dotenv('config.env', override=True)
 

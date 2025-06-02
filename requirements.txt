@@ -4,3 +4,4 @@ uvicorn
 pymongo
 python-dotenv
 TgCrypto
+requests

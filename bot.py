@@ -2,7 +2,6 @@ import uuid
 import asyncio
 import requests
 import base64
-import logging
 import re
 from datetime import datetime, timezone, timedelta
 from pyrogram import Client, enums, filters
@@ -12,12 +11,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 import uvicorn
-
 from config import *
-
-# Logger setup
-logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("sharing_bot")
 
 # MongoDB setup
 mongo = MongoClient(MONGO_URI)
