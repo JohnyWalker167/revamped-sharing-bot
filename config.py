@@ -33,6 +33,8 @@ API_HASH = os.getenv('API_HASH')
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 OWNER_ID = int(os.getenv('OWNER_ID'))
 
+MY_DOMAIN = os.getenv('MY_DOMAIN')
+
 TOKEN_VALIDITY_SECONDS = 24 * 60 * 60  # 24 hours
 
 MONGO_URI = os.getenv("MONGO_URI")
