@@ -1,0 +1,6 @@
+pyrofork
+fastapi
+uvicorn
+pymongo
+python-dotenv
+TgCrypto
