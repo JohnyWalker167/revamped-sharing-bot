@@ -355,7 +355,7 @@ async def index_channel_files(client, message: Message):
                 upsert_file_info(file_info)
                 total_saved += 1
         invalidate_channel_cache(channel_id)
-        await asyncio.sleep(1)  # avoid flood
+        await asyncio.sleep(3)  # avoid flood
 
     await message.reply_text(f"✅ Indexed {total_saved} files from channel {channel_id}.")
 
