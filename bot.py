@@ -319,6 +319,7 @@ async def index_channel_files(client, message: Message):
         batch_end = min(batch_start + batch_size - 1, end_msg_id)
         ids = list(range(batch_start, batch_end + 1))
         try:
+            await asyncio.sleep(3)  # Avoid flood
             messages = await client.get_messages(channel_id, ids)
         except Exception as e:
             await message.reply_text(f"Failed to get messages {batch_start}-{batch_end}: {e}")

@@ -6,8 +6,10 @@ from os import environ
 from requests import get as rget
 
 # Logger setup
-logging.basicConfig(level=logging.WARNING)
-logging.getLogger("uvicorn").setLevel(logging.WARNING)
+logging.basicConfig(level=logging.ERROR)
+logging.getLogger("uvicorn").setLevel(logging.ERROR)
+logging.getLogger("uvicorn.error").setLevel(logging.ERROR)
+logging.getLogger("uvicorn.access").setLevel(logging.ERROR)
 logger = logging.getLogger("sharing_bot")
 
 CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
