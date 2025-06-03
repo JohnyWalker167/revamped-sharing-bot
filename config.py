@@ -7,8 +7,7 @@ from requests import get as rget
 
 # Logger setup
 logging.basicConfig(level=logging.WARNING)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
-logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
+logging.getLogger("uvicorn").setLevel(logging.WARNING)
 logger = logging.getLogger("sharing_bot")
 
 CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
