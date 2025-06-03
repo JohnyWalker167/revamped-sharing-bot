@@ -590,7 +590,7 @@ async def main():
     bot.loop.create_task(start_fastapi())
 
 async def start_fastapi():
-    config = uvicorn.Config(api, host="0.0.0.0", port=8000, loop="asyncio")
+    config = uvicorn.Config(api, host="0.0.0.0", port=8000, loop="asyncio", log_level="warning")
     server = uvicorn.Server(config)
     try:
         await server.serve()
