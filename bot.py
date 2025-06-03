@@ -13,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 import uvicorn
 from config import *
+from collections import defaultdict
 
 # MongoDB setup
 mongo = MongoClient(MONGO_URI)
@@ -46,6 +47,11 @@ api.add_middleware(
 
 # In-memory cache for file lists
 channel_files_cache = {}
+
+# Track user file sends in memory
+user_file_count = defaultdict(int)
+MAX_FILES_PER_SESSION = 10
+AUTO_DELETE_SECONDS = 5 * 60
 
 # --- Utility Functions ---
 
@@ -183,6 +189,12 @@ async def start_handler(client, message):
                 )
             )
             return
+
+        # Limit to 10 files per session
+        if user_file_count[user_id] >= MAX_FILES_PER_SESSION:
+            await message.reply_text("❌ You have reached the maximum of 10 files per session.")
+            return
+
         try:
             b64 = message.command[1][5:]
             padding = '=' * (-len(b64) % 4)
@@ -198,11 +210,23 @@ async def start_handler(client, message):
             await message.reply_text("File not found.")
             return
         try:
-            await client.copy_message(
+            sent = await client.copy_message(
                 chat_id=message.chat.id,
                 from_chat_id=file_doc["channel_id"],
                 message_id=file_doc["message_id"]
             )
+            user_file_count[user_id] += 1
+
+            # Schedule auto-delete after 5 minutes
+            async def delete_after_delay(chat_id, msg_id):
+                await asyncio.sleep(AUTO_DELETE_SECONDS)
+                try:
+                    await client.delete_messages(chat_id, msg_id)
+                except Exception:
+                    pass
+
+            bot.loop.create_task(delete_after_delay(sent.chat.id, sent.id))
+
         except Exception as e:
             await message.reply_text(f"Failed to send file: {e}")
         return
